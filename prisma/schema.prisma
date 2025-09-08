@@ -33,7 +33,7 @@ model User {
 }
 
 model Stream {
-  id           String  @id @default(uuid())
+  id           String  @id @default(uuid()) @db.Uuid
   name         String  @db.Text
   thumbnailUrl String? @db.Text
 
@@ -57,7 +57,7 @@ model Stream {
 }
 
 model Follow {
-  id          String @id @default(uuid())
+  id          String @id @default(uuid()) @db.Uuid
   followerId  String   @unique @db.Uuid
   followingId String   @unique @db.Uuid
 
@@ -73,7 +73,7 @@ model Follow {
 }
 
 model Block {
-  id        String @id @default(uuid())
+  id        String @id @default(uuid()) @db.Uuid
   blockerId String   @unique @db.Uuid
   blockedId String   @unique @db.Uuid
 

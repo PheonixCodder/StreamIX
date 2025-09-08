@@ -1,18 +1,12 @@
-import React, { Suspense } from "react";
-import { Metadata } from "next";
+import Results, { ResultsSkeleton } from "./_components/results";
+import { Suspense } from "react";
 
-// import { Results, ResultsSkeleton } from "./_components/results";
-
-export const metadata: Metadata = {
-  title: "Home",
-};
-
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="h-full p-8 max-w-screen-2xl mx-auto">
-      {/* <Suspense fallback={<ResultsSkeleton />}>
+      <Suspense fallback={<ResultsSkeleton />}>
         <Results />
-      </Suspense> */}
+      </Suspense>
       
     </div>
   );

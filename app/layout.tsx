@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/theme-provider";
+import { Poppins } from "next/font/google";
 
-
-const inter = Inter({ subsets: ["latin"] });
+const font = Poppins({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "StreamIX",
-  description: "Let's Play",
+  description:
+    "StreamIX is a platform for gamers to connect, share,discover and play games.",
 };
 
 export default function RootLayout({
@@ -21,15 +24,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
+      appearance={{ baseTheme: dark }}
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/"
     >
       <html lang="en" suppressHydrationWarning>
-        <body
-          className={inter.className}
-          suppressHydrationWarning
-        >
+        {/* //TODO: Learn How to add favicon */}
+        {/* <head>
+          <link rel="icon" href="/public/joystick.ico" sizes="any" />
+        </head> */}
+        <body className={font.className}>
           <ThemeProvider
             attribute="class"
             forcedTheme="dark"
