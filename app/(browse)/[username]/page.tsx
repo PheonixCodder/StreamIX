@@ -28,7 +28,7 @@ type UserPageProps = {
     return ( 
         <StreamPlayer 
             user={user}
-            stream={user.stream}
+            stream={user.stream[0]}
             isFollowing={isFollowing}
         />
      );

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -8,67 +8,65 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { UserAvatar } from "@/components/user-avatar";
 import { LiveBadge } from "@/components/live-badge";
+import { TooltipTrigger } from "@/components/ui/tooltip";
 
-interface UserItemProps{
-    username: string;
-    imageUrl: string;
-    isLive?: boolean;
-
+interface UserItemProps {
+  username: string;
+  imageUrl: string;
+  isLive?: boolean;
 }
 
-export const UserItem = ({
-    username,
-    imageUrl,
-    isLive
-}: UserItemProps) => {
-    const pathname = usePathname();
+export const UserItem = ({ username, imageUrl, isLive }: UserItemProps) => {
+  const pathname = usePathname();
+  const { collapsed } = useSidebar((state) => state);
 
-    const {collapsed} = useSidebar((state)=>state)
+  const href = `/${username}`;
+  const isActive = pathname === href;
 
-    const href = `/${username}`;  
-    const isActive = pathname === href;
-
-    return(
-        <Button
-            asChild
-            variant={"ghost"}
+  return (
+    <Button
+      asChild
+      variant="ghost"
+      className={cn(
+        "w-full h-12",
+        collapsed ? "justify-center" : "justify-between",
+        isActive && "bg-accent"
+      )}
+    >
+      <TooltipTrigger>
+        <Link href={href}>
+          <div
             className={cn(
-                "w-full h-12",
-                collapsed ? "justify-center" : "justify-start" ,
-                isActive && "bg-accent"
+              "flex items-center w-full gap-x-4",
+              collapsed && "justify-center"
             )}
-        >
-            <Link href={href}>
-                <div className={cn(
-                    "flex items-center w-full gap-x-4",
-                    collapsed && "justify-center"
-                )}>
-                    <UserAvatar
-                        imageUrl={imageUrl}
-                        username={username}
-                        isLive={isLive}
-                    />
-                    {!collapsed && (
-                        <p className="truncate">
-                            {username}
-                        </p>
-                    )}
-                    {!collapsed && isLive && (
-                        <LiveBadge className="ml-auto"/>
-                    )}
-                </div>
-            </Link>
-        </Button>
-    )
-}
+          >
+            <UserAvatar
+              imageUrl={imageUrl}
+              username={username}
+              isLive={isLive}
+            />
+
+            {!collapsed && (
+              <div className="flex items-center justify-between w-full">
+                <p className="truncate max-w-[90px]">{username}</p>
+                {!isLive && <LiveBadge className="ml-2 shrink-0" />}
+              </div>
+            )}
+          </div>
+        </Link>
+      </TooltipTrigger>
+    </Button>
+  );
+};
 
 export const UserItemSkeleton = () => {
-    return(
-        <li className="flex items-center gap-x-4 px-3 py-2">
-            <Skeleton className="min-h-[32px] min-w-[32px] rounded-full"/>
-            <div className="flex-1">
-                <Skeleton className="h-6"/>
-            </div>
-        </li>
-    )
-}
+  return (
+    <li className="flex items-center gap-x-4 px-3 py-2">
+      <Skeleton className="min-h-[32px] min-w-[32px] rounded-full" />
+      <div className="flex-1">
+        <Skeleton className="h-6" />
+      </div>
+    </li>
+  );
+};
