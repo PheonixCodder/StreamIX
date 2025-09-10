@@ -28,7 +28,6 @@ export const getFollowedUsers = async () => {
         },
       },
     });
-    
 
     return followedUsers;
   } catch {
