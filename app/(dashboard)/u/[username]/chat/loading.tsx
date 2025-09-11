@@ -1,18 +1,14 @@
-import { Skeleton } from "@/components/ui/skeleton";
+import { ChatHeaderSkeleton, ToggleCardSkeleton } from "./_components/skeleton";
 
-import { ToggleCardSkeleton } from "./_components/toggle-card";
+const ChatPageLoading = () => {
+  return (
+    <div className="p-6 space-y-4">
+      <ChatHeaderSkeleton />
+      <ToggleCardSkeleton />
+      <ToggleCardSkeleton />
+      <ToggleCardSkeleton />
+    </div>
+  );
+};
 
-const ChatLoading = () => {
-    return ( 
-        <div className="p-6 space-y-4">
-            <Skeleton className="h-10 w-[200px]" />
-            <div className="space-y-4">
-                <ToggleCardSkeleton/>
-                <ToggleCardSkeleton/>
-                <ToggleCardSkeleton/>
-            </div>
-        </div>
-     );
-}
- 
-export default ChatLoading;
+export default ChatPageLoading;

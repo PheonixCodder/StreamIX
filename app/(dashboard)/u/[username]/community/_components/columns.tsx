@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/user-avatar";
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 import UnlockButton from "./unblock-button";
 
 // This type is used to define the shape of our data.
@@ -14,7 +14,7 @@ export type BlockedUser = {
   imageUrl: string;
   username: string;
   createdAt: string;
-}
+};
 
 export const columns: ColumnDef<BlockedUser>[] = [
   {
@@ -28,14 +28,17 @@ export const columns: ColumnDef<BlockedUser>[] = [
           Username
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
-    cell: ({row}) => (
+    cell: ({ row }) => (
       <div className="flex items-center gap-x-4">
-        <UserAvatar username={row.original.username} imageUrl={row.original.imageUrl} />
+        <UserAvatar
+          username={row.original.username}
+          imageUrl={row.original.imageUrl}
+        />
         <span>{row.original.username}</span>
       </div>
-    )
+    ),
   },
   {
     accessorKey: "createdAt",
@@ -48,11 +51,11 @@ export const columns: ColumnDef<BlockedUser>[] = [
           Date Blocked
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
   {
     accessorKey: "actions",
-    cell: ({row}) => <UnlockButton userId={row.original.userId} />
+    cell: ({ row }) => <UnlockButton userId={row.original.userId} />,
   },
-]
+];

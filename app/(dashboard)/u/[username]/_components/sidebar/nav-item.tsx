@@ -6,7 +6,7 @@ import { TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useCreatorSidebar } from "@/store/use-creator-sidebar";
 import { LucideIcon } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface NavItemProps {
   icon: LucideIcon;
@@ -17,10 +17,12 @@ interface NavItemProps {
 
 const NavItem = ({ icon: Icon, label, href, isActive }: NavItemProps) => {
   const { collapsed } = useCreatorSidebar((state) => state);
+  const router = useRouter();
   return (
     <Button
       asChild
       variant={"ghost"}
+      onClick={() => router.push(href)}
       className={cn(
         "w-full h-12",
         collapsed ? "justify-center" : "justify-start",
@@ -28,13 +30,11 @@ const NavItem = ({ icon: Icon, label, href, isActive }: NavItemProps) => {
       )}
     >
         <TooltipTrigger>
-      <Link href={href}>
-        <div className="flex items-center gap-x-4">
-          <Icon className={cn("h-4 w-4", collapsed ? "mr-0" : "mr-2")} />
-          {!collapsed && <span>{label}</span>}
-        </div>
-      </Link>
-      </TooltipTrigger>
+          <div className="flex items-center gap-x-4">
+            <Icon className={cn("h-4 w-4", collapsed ? "mr-0" : "mr-2")} />
+            {!collapsed && <span>{label}</span>}
+          </div>
+        </TooltipTrigger>
     </Button>
   );
 };

@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState, useTransition, useRef, ElementRef } from "react";
+import { useState, useTransition, useRef } from "react";
 import { updateStream } from "@/actions/stream";
 import { toast } from "sonner";
 import { UploadDropzone } from "@/lib/uploadthing";
@@ -29,7 +29,7 @@ const InfoModal = ({
     initialName,
     initialThumbnailUrl
 }: InfoModalProps) => {
-    const closeRef = useRef<ElementRef<"button">>(null);
+    const closeRef = useRef<HTMLButtonElement>(null);
     const [isPending, startTransition] = useTransition();
 
     const [name, setName] = useState(initialName);

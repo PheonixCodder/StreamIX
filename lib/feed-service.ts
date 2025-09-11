@@ -17,6 +17,9 @@ export const getStreams = async () => {
     if(userId){
         streams = await db.stream.findMany({
             where:{
+                userId: {
+                    not: userId
+                },
                 user:{
                     NOT: {
                         blocking:{

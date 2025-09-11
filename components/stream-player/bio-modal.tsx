@@ -1,6 +1,6 @@
 "use client";
 
-import { useState,useTransition, useRef, ElementRef } from "react";
+import { useState,useTransition, useRef } from "react";
 
 import {
     Dialog,
@@ -25,7 +25,7 @@ export const BioModal = ({
     const [isPending, startTransition] = useTransition();
     const [value, setValue] = useState(initialValue || "");
 
-    const closeRef = useRef<ElementRef<"button">>(null);
+    const closeRef = useRef<HTMLButtonElement>(null);
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
