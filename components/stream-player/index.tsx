@@ -11,6 +11,7 @@ import ChatToggle from "./chat-toggle";
 import Header, { HeaderSkeleton } from "./header";
 import InfoCard from "./info-card";
 import AboutCard from "./about-card";
+import { AnimatePresence, motion } from "framer-motion";
 
 type CustomStream = {
   id: string;
@@ -43,8 +44,6 @@ export const StreamPlayer = ({
   isFollowing,
 }: StreamPlayerProps) => {
   const { token, name, identity, loading } = useViewerToken(user.id);
-  console.log(token, name, identity);
-
   const { collapsed } = useChatSidebar((state) => state);
 
   if (loading) {
@@ -61,12 +60,10 @@ export const StreamPlayer = ({
       <LiveKitRoom
         token={token}
         serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
-        className={cn(
-          "grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full",
-          collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
-        )}
+        className="flex h-full"
       >
-        <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
+        {/* Main Content */}
+        <div className="flex-1 space-y-4 overflow-y-auto pb-10 hidden-scrollbar">
           <Video hostName={user.username} hostIdentity={user.id} />
           <Header
             hostname={user.username}
@@ -90,17 +87,30 @@ export const StreamPlayer = ({
             followedByCount={user._count.followedBy}
           />
         </div>
-        <div className={cn("col-span-1", collapsed && "hidden")}>
-          <Chat
-            viewerName={name}
-            hostname={user.username}
-            hostIdentity={user.id}
-            isFollowing={isFollowing}
-            isChatEnabled={stream.isChatEnabled}
-            isChatDelayed={stream.isChatDelayed}
-            isChatFollowersOnly={stream.isChatFollowersOnly}
-          />
-        </div>
+
+        {/* Animated Chat Sidebar */}
+        <AnimatePresence initial={false}>
+          {!collapsed && (
+            <motion.div
+              key="chat-sidebar"
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 360, opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden bg-background border-l"
+            >
+              <Chat
+                viewerName={name}
+                hostname={user.username}
+                hostIdentity={user.id}
+                isFollowing={isFollowing}
+                isChatEnabled={stream.isChatEnabled}
+                isChatDelayed={stream.isChatDelayed}
+                isChatFollowersOnly={stream.isChatFollowersOnly}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </LiveKitRoom>
     </>
   );
@@ -108,12 +118,12 @@ export const StreamPlayer = ({
 
 export const StreamPlayerSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
-      <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
+    <div className="flex h-full">
+      <div className="flex-1 space-y-4 overflow-y-auto pb-10 hidden-scrollbar">
         <VideoSkeleton />
         <HeaderSkeleton />
       </div>
-      <div className="col-span-1 bg-background">
+      <div className="w-[360px] bg-background border-l">
         <ChatSkeleton />
       </div>
     </div>
