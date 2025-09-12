@@ -1,12 +1,14 @@
 import { StreamPlayer } from "@/components/stream-player";
 import { getUserByUsername } from "@/lib/user-service";
 import { currentUser } from "@clerk/nextjs/server";
+import { IngressClient } from "livekit-server-sdk";
+import { notFound } from "next/navigation";
 
 interface CreatorPageProps {
-    params: Promise<{
-      username: string;
-    }>;
-  }
+  params: Promise<{
+    username: string;
+  }>;
+}
 
 const CreatorPage = async ({ params }: CreatorPageProps) => {
   const externalUser = await currentUser();
@@ -14,16 +16,12 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
   const user = await getUserByUsername(username);
 
   if (!user || user.externalUserId !== externalUser?.id || !user.stream) {
-    throw new Error("Unauthorized");
+    notFound();
   }
 
   return (
     <div className="h-full">
-      {/* <StreamPlayer
-        user={user}
-        stream={user.stream[0]}
-        isFollowing={true}
-      /> */}
+      <StreamPlayer user={user} stream={user.stream[0]} isFollowing />
     </div>
   );
 };

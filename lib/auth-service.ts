@@ -1,6 +1,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 
 import { db } from "./db";
+import { notFound } from "next/navigation";
 
 export const getSelf = async () => {
     const self = await currentUser();
@@ -36,11 +37,11 @@ export const getSelfByUsername = async (username: string) => {
         }
     })
     if(!user){
-        throw new Error("Not Found")
+        notFound()
     }
 
     if(self.username !== user.username){
-        throw new Error("Unauthorized")
+        notFound()
     }
 
     return user;

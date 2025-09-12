@@ -10,6 +10,7 @@ const receiver = new WebhookReceiver(
 );
 
 export async function POST(req: Request) {
+  console.log(1)
   // Ensure raw body
   const body = await req.text();
   const headerPayload = await headers();

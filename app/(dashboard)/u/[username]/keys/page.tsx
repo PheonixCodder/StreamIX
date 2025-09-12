@@ -16,7 +16,7 @@ const KeysPage = async () => {
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">Keys & URLs</h1>
-        {/* <ConnectModal /> */}
+        <ConnectModal />
       </div>
       <div className="space-y-4">
         <UrlCard value={stream.serverUrl} />

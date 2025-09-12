@@ -49,8 +49,8 @@ export const UserItem = ({ username, imageUrl, isLive }: UserItemProps) => {
 
             {!collapsed && (
               <div className="flex items-center justify-between w-full">
-                <p className="truncate max-w-[90px]">{username}</p>
-                {!isLive && <LiveBadge className="ml-2 shrink-0" />}
+                <p className="truncate min-w-[90px] max-w-[90px]">{username}</p>
+                {isLive && <LiveBadge className="ml-2 shrink-0" />}
               </div>
             )}
           </div>

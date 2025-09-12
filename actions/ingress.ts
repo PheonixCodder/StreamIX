@@ -59,6 +59,8 @@ export const createIngress = async (ingressType: IngressInput) => {
     participantIdentity: self.id,
     // default: enableTranscoding is optional. We'll explicitly set based on type.
   };
+  await ingressClient.listIngress({ roomName: "..." });
+
 
   if (ingressType === IngressInput.WHIP_INPUT) {
     // For WHIP: default behavior is no transcoding, but if you want transcoding, turn on.
@@ -101,5 +103,9 @@ export const createIngress = async (ingressType: IngressInput) => {
 
   revalidatePath(`/u/${self.username}/keys`);
 
-  return ingress;
+  return {
+    ingressId: ingress.ingressId,
+    url: ingress.url,
+    streamKey: ingress.streamKey,
+  };
 };

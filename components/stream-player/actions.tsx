@@ -18,6 +18,7 @@ interface ActionsProps {
 }
 
 const Actions = ({ hostIdentity, isFollowing, isHost }: ActionsProps) => {
+  console.log(isHost)
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const { userId } = useAuth();
@@ -55,6 +56,10 @@ const Actions = ({ hostIdentity, isFollowing, isHost }: ActionsProps) => {
       handleFollow();
     }
   };
+
+  if (isHost){
+    return <>sda</>
+  }
 
   return (
     <Button
