@@ -44,6 +44,8 @@ export const StreamPlayer = ({
   isFollowing,
 }: StreamPlayerProps) => {
   const { token, name, identity, loading } = useViewerToken(user.id);
+  console.log(token, name, identity, loading);
+  
   const { collapsed } = useChatSidebar((state) => state);
 
   if (loading) {

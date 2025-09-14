@@ -7,7 +7,6 @@ export default function HomePage() {
       <Suspense fallback={<ResultsSkeleton />}>
         <Results />
       </Suspense>
-      
     </div>
   );
 }

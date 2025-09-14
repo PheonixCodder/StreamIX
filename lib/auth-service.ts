@@ -4,45 +4,48 @@ import { db } from "./db";
 import { notFound } from "next/navigation";
 
 export const getSelf = async () => {
-    const self = await currentUser();
+  const self = await currentUser();
 
-    if(!self || !self.username){
-        throw new Error("Unauthorized")
-    }
+  if (!self || !self.username) {
+    throw new Error("Unauthorized");
+  }
 
-    const user = db.user.findUnique({
-        where:{
-            externalUserId: self.id
-        }
-    })
+  const user = db.user.findUnique({
+    where: {
+      externalUserId: self.id,
+    },
+  });
 
-    if(!user){
-        throw new Error("Not Found")
-    }
+  if (!user) {
+    throw new Error("Not Found");
+  }
 
-    return user;
-
-}
+  return user;
+};
 
 export const getSelfByUsername = async (username: string) => {
+  try {
     const self = await currentUser();
 
-    if(!self || !self.username){
-        throw new Error("Unauthorized")
+    if (!self || !self.username) {
+      throw new Error("Unauthorized");
     }
 
     const user = await db.user.findUnique({
-        where:{
-            username,
-        }
-    })
-    if(!user){
-        notFound()
+      where: {
+        username,
+      },
+    });
+    if (!user) {
+      notFound();
     }
 
-    if(self.username !== user.username){
-        notFound()
+    if (self.username !== user.username) {
+      notFound();
     }
 
     return user;
-}
+  } catch (error) {
+    notFound();
+  }
+};

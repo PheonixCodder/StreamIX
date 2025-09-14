@@ -41,6 +41,11 @@ export const getRecommended = async () => {
                                     blockedId: userId
                                 },
                             },
+                            guestBlocking : {
+                                none: {
+                                    hostId: userId
+                                }
+                            }
                         },
                     }
                 ]

@@ -1,12 +1,11 @@
 "use client";
 
 import { ChatVariant, useChatSidebar } from "@/store/use-chat-sidebar";
-import { 
-    useChat,
-    useConnectionState, 
-    useRemoteParticipant 
-} 
-from "@livekit/components-react";
+import {
+  useChat,
+  useConnectionState,
+  useRemoteParticipant,
+} from "@livekit/components-react";
 import { ConnectionState } from "livekit-client";
 import { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -15,97 +14,94 @@ import { ChatForm, ChatFormSkeleton } from "./chat-form";
 import ChatList, { ChatListSkeleton } from "./chat-list";
 import ChatCommunity from "./chat-community";
 
-interface ChatProps{
-    hostname: string;
-    viewerName: string;
-    hostIdentity: string;
-    isFollowing: boolean;
-    isChatEnabled: boolean;
-    isChatDelayed: boolean;
-    isChatFollowersOnly: boolean;
+interface ChatProps {
+  hostname: string;
+  viewerName: string;
+  hostIdentity: string;
+  isFollowing: boolean;
+  isChatEnabled: boolean;
+  isChatDelayed: boolean;
+  isChatFollowersOnly: boolean;
 }
 
 export const Chat = ({
-    hostname,
-    viewerName,
-    hostIdentity,
-    isFollowing,
-    isChatEnabled,
-    isChatDelayed,
-    isChatFollowersOnly
+  hostname,
+  viewerName,
+  hostIdentity,
+  isFollowing,
+  isChatEnabled,
+  isChatDelayed,
+  isChatFollowersOnly,
 }: ChatProps) => {
-    const matches = useMediaQuery('(max-width: 1024px)');
-    const { variant, onExpand } = useChatSidebar((state)=>state);
-    const connectionState = useConnectionState();
-    const participant = useRemoteParticipant(hostIdentity);
+  const matches = useMediaQuery("(max-width: 1024px)");
+  const { variant, onExpand } = useChatSidebar((state) => state);
+  const connectionState = useConnectionState();
+  const participant = useRemoteParticipant(hostIdentity);
 
-    const isOnline = participant && connectionState === ConnectionState.Connected;
-    
-    const isHidden = !isChatEnabled || !isOnline;
+  const isOnline = participant && connectionState === ConnectionState.Connected;
 
-    const [value,setValue] = useState("");
-    const {chatMessages: messages, send} = useChat();
+  const isHidden = !isChatEnabled || !isOnline;
 
-    useEffect(() => {
-        if(matches){
-            onExpand();
-        }
-    },[matches,onExpand]);
+  const [value, setValue] = useState("");
+  const { chatMessages: messages, send } = useChat();
 
-    const reversedMessages = useMemo(() => {
-        return messages.sort((a,b) => b.timestamp - a.timestamp);
-    }, [messages]);
+  useEffect(() => {
+    if (matches) {
+      onExpand();
+    }
+  }, [matches, onExpand]);
 
-    const onSubmit = () => {
-        if(!send){
-            return
-        }
+  const reversedMessages = useMemo(() => {
+    return messages.sort((a, b) => b.timestamp - a.timestamp);
+  }, [messages]);
 
-        send(value);
-        setValue("");
+  const onSubmit = () => {
+    if (!send) {
+      return;
     }
 
-    const onChange = (value: string) => {
-        setValue(value)
-    }
+    send(value);
+    setValue("");
+  };
 
-    return(
-        <div className="flex flex-col bg-background border-1 border-b pt-0 h-[calc(100vh-80px)]">
-            <ChatHeader />
-            {variant === ChatVariant.CHAT && (
-                <>
-                    <ChatList 
-                        messages={reversedMessages}
-                        isHidden={isHidden}
-                    />
-                    <ChatForm 
-                        onSubmit={onSubmit}
-                        value={value}
-                        onChange={onChange}
-                        isHidden={isHidden}
-                        isFollowersOnly={isChatFollowersOnly}
-                        isDelayed={isChatDelayed}
-                        isFollowing={isFollowing}
-                    /> 
-                </>
-            )}
-            {variant === ChatVariant.COMMUNITY && (
-                <ChatCommunity 
-                    viewerName={viewerName}
-                    hostname={hostname}
-                    isHidden={isHidden}
-                />
-            )}
-        </div>
-    )
-}
+  const onChange = (value: string) => {
+    setValue(value);
+  };
+
+  return (
+    <div className="flex flex-col bg-background border-1 border-b pt-0 h-[calc(100vh-80px)]">
+      <ChatHeader />
+      {variant === ChatVariant.CHAT && (
+        <>
+          <ChatList messages={reversedMessages} isHidden={isHidden} />
+          <ChatForm
+            onSubmit={onSubmit}
+            value={value}
+            onChange={onChange}
+            isHidden={isHidden}
+            isFollowersOnly={isChatFollowersOnly}
+            isDelayed={isChatDelayed}
+            isFollowing={isFollowing}
+          />
+        </>
+      )}
+      {variant === ChatVariant.COMMUNITY && (
+        <ChatCommunity
+          viewerName={viewerName}
+          hostname={hostname}
+          isHidden={isHidden}
+        />
+      )}
+    </div>
+  );
+};
 
 export const ChatSkeleton = () => {
-    return(
-        <div className="flex flex-col border-l border-b pt-0 h-[calc(100vh-80px)] border-2">
-            <ChatHeaderSkeleton />
-            <ChatListSkeleton />
-            <ChatFormSkeleton />
-        </div>
-    );
-}
+  return (
+    <div className="flex flex-col border-l border-b pt-0 h-[calc(100vh-80px)] border-2">
+      <ChatHeaderSkeleton />
+      <ChatListSkeleton />
+      <ChatFormSkeleton />
+    </div>
+  );
+};

@@ -11,7 +11,6 @@ export const useViewerToken = (hostIdentity: string) => {
 
   useEffect(() => {
     const createToken = async () => {
-      console.log(2);
       try {
         const viewerToken = await createViewerToken(hostIdentity);
         setToken(viewerToken);
@@ -20,18 +19,19 @@ export const useViewerToken = (hostIdentity: string) => {
           name?: string;
         };
         const name = decodedToken?.name;
-        const identity = decodedToken.jti;
+        const identity = decodedToken.sub;
 
-        if (identity) {
-          setIdentity(identity);
-        }
-        if (name) {
-          setName(name);
-        }
+        if (identity) setIdentity(identity);
+        if (name) setName(name);
 
         setLoading(false);
-      } catch {
-        toast.error("Something went wrong!");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        setLoading(false);
+        setToken(""); // just to be safe
+        setIdentity("");
+        setName("");
+        toast.error(error.message || "Something went wrong!");
       }
     };
     createToken();

@@ -1,34 +1,34 @@
 import { db } from "./db";
 import { getSelf } from "./auth-service";
 
-export const isBlockedByUser = async (id: string) => {
-  try {
-    const self = await getSelf();
 
-    const otherUser = await db.user.findUnique({
-      where: {
-        id,
-      },
-    });
-    if (!otherUser) {
-      throw new Error("User not found");
-    }
+export const blockGuestUser = async (guestId: string) => {
+  const self = await getSelf();
 
-    if (otherUser.id === self?.id) return false;
-
-    const existingBlock = await db.block.findUnique({
-      where: {
-        blockerId_blockedId: {
-          blockerId: otherUser.id,
-          blockedId: self!.id,
-        },
-      },
-    });
-
-    return !!existingBlock;
-  } catch {
-    return false;
+  // Prevent blocking self or host accidentally
+  if (self!.id === guestId) {
+    throw new Error("Cannot block yourself");
   }
+
+  const existingGuestBlock = await db.guestBlock.findUnique({
+    where: {
+      hostId_guestId: {
+        hostId: self!.id,
+        guestId,
+      },
+    },
+  });
+
+  if (existingGuestBlock) {
+    throw new Error("Already blocked");
+  }
+
+  return await db.guestBlock.create({
+    data: {
+      hostId: self!.id,
+      guestId,
+    },
+  });
 };
 
 export const blockUser = async (id: string) => {

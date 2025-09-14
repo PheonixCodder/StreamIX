@@ -10,7 +10,7 @@ const receiver = new WebhookReceiver(
 );
 
 export async function POST(req: Request) {
-  console.log(1)
+  console.log(1);
   // Ensure raw body
   const body = await req.text();
   const headerPayload = await headers();
@@ -21,6 +21,7 @@ export async function POST(req: Request) {
   }
 
   let event: WebhookEvent;
+
   try {
     // Optionally set clockTolerance, if you want to allow a bit of time skew
     event = await receiver.receive(
@@ -29,6 +30,8 @@ export async function POST(req: Request) {
       false /* skipAuth */,
       "5s" /* clock tolerance */
     );
+    console.log("Ingress ID:", event.ingressInfo?.ingressId);
+    console.log(`Received webhook: ${event.event}`);
   } catch (err) {
     console.error("WebhookReceiver.receive failed:", err);
     return new NextResponse("Invalid webhook or authorization", {

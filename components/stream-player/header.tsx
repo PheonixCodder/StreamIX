@@ -34,6 +34,7 @@ const Header = ({
   const participantCount = participants.length - 1;
 
   const hostAsViewer = `host-${hostIdentity}`;
+  console.log(viewerIdentity);
   const isHost = viewerIdentity === hostAsViewer;
 
   return (

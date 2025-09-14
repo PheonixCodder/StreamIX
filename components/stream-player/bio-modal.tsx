@@ -70,7 +70,6 @@ export const BioModal = ({
                         <Button
                             disabled={isPending}
                             type="submit"
-                            variant={"primary"}
                         >
                             Save
                         </Button>

@@ -18,7 +18,6 @@ interface ActionsProps {
 }
 
 const Actions = ({ hostIdentity, isFollowing, isHost }: ActionsProps) => {
-  console.log(isHost)
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const { userId } = useAuth();
@@ -57,15 +56,14 @@ const Actions = ({ hostIdentity, isFollowing, isHost }: ActionsProps) => {
     }
   };
 
-  if (isHost){
-    return <>sda</>
+  if (isHost) {
+    return;
   }
 
   return (
     <Button
       disabled={isPending || isHost}
       onClick={toggleFollow}
-      variant={"primary"}
       size={"sm"}
       className="w-full lg:w-auto"
     >

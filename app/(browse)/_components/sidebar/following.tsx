@@ -5,6 +5,7 @@ import { Follow, User } from "@prisma/client";
 import { UserItem, UserItemSkeleton } from "./user-Item";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSidebarAnimation } from "@/hooks/useSidebarAnimation";
+import { Hint } from "@/components/hint";
 
 interface FollowingProps {
   data: (Follow & {
@@ -43,12 +44,13 @@ export const Following = ({ data }: FollowingProps) => {
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         {data.map((follow) => (
-          <UserItem
-            key={follow.following.id}
-            username={follow.following.username}
-            imageUrl={follow.following.imageUrl}
-            isLive={follow.following.stream?.[0].isLive}
-          />
+          <Hint key={follow.following.id} label={follow.following.username} side="right" asChild>
+            <UserItem
+              username={follow.following.username}
+              imageUrl={follow.following.imageUrl}
+              isLive={follow.following.stream?.[0].isLive}
+            />
+          </Hint>
         ))}
       </motion.ul>
     </div>

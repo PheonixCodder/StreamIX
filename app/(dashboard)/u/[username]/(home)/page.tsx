@@ -1,7 +1,6 @@
 import { StreamPlayer } from "@/components/stream-player";
 import { getUserByUsername } from "@/lib/user-service";
 import { currentUser } from "@clerk/nextjs/server";
-import { IngressClient } from "livekit-server-sdk";
 import { notFound } from "next/navigation";
 
 interface CreatorPageProps {
@@ -12,8 +11,9 @@ interface CreatorPageProps {
 
 const CreatorPage = async ({ params }: CreatorPageProps) => {
   const externalUser = await currentUser();
-  const { username } = await params; // No need for `await` here
+  const { username } = await params;
   const user = await getUserByUsername(username);
+  console.log(user)
 
   if (!user || user.externalUserId !== externalUser?.id || !user.stream) {
     notFound();

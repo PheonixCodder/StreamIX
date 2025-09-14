@@ -77,7 +77,6 @@ export const ChatForm = ({
             <div className="ml-auto">
                 <Button
                     type="submit"
-                    variant={"primary"}
                     size={"sm"}
                     disabled={isDisabled}
                 >

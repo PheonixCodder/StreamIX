@@ -37,7 +37,7 @@ const InfoModal = ({
 
     const router = useRouter();
 
-    const onRemoveThumbanil = () => {
+    const onRemoveThumbnail = () => {
         startTransition(() => {
             updateStream({thumbnailUrl: null})
                 .then(() => {
@@ -101,7 +101,7 @@ const InfoModal = ({
                                         <Button
                                             type="button"
                                             disabled={isPending}
-                                            onClick={onRemoveThumbanil}
+                                            onClick={onRemoveThumbnail}
                                             className="h-auto w-auto p-1.5"
                                         >
                                             <Trash className="h-4 w-4" />
@@ -119,6 +119,7 @@ const InfoModal = ({
                              <div className="rounded-xl border outline-dashed outline-muted">
                                 <UploadDropzone 
                                     endpoint="thumbnailUploader"
+                                    className="cursor-pointer"
                                     appearance={{
                                         label: {
                                             color: "#FFFFFF"
@@ -128,7 +129,7 @@ const InfoModal = ({
                                         }
                                     }}
                                     onClientUploadComplete={(res) => {
-                                        setThumbnailUrl(res?.[0]?.url);
+                                        setThumbnailUrl(res?.[0]?.ufsUrl);
                                         router.refresh()
                                     }}
                                 />
@@ -143,7 +144,6 @@ const InfoModal = ({
                         </DialogClose>
                         <Button
                             disabled={isPending}
-                            variant={"primary"}
                             type="submit"
                         >
                             Save

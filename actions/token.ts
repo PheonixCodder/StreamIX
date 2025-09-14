@@ -5,7 +5,8 @@ import { AccessToken } from "livekit-server-sdk";
 
 import { getSelf } from "@/lib/auth-service";
 import { getUserById } from "@/lib/user-service";
-import { isBlockedByUser } from "@/lib/block-service";
+import { isBlockedByUser } from "@/actions/block";
+import { cookies } from "next/headers";
 
 export const createViewerToken = async (hostIdentity: string) => {
   let self;
@@ -13,19 +14,33 @@ export const createViewerToken = async (hostIdentity: string) => {
   try {
     self = await getSelf();
   } catch {
-    const id = v4();
-    const username = `guest#${Math.floor(Math.random() * 1000)}`;
-    self = { id, username };
+    const cookieStore = await cookies();
+    let guestId = cookieStore.get("guest_id")?.value;
+    let guestUsername = cookieStore.get("guest_username")?.value;
+
+    if (!guestId || !guestUsername) {
+      guestId = v4();
+      guestUsername = `guest#${Math.floor(Math.random() * 1000)}`;
+      cookieStore.set("guest_id", guestId, {
+        path: "/",
+        httpOnly: false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
+      cookieStore.set("guest_username", guestUsername, {
+        path: "/",
+        httpOnly: false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
+    }
+
+    self = { id: guestId, username: guestUsername };
   }
 
   const host = await getUserById(hostIdentity);
   if (!host) {
     throw new Error("User not found");
-  }
-
-  const isBlocked = await isBlockedByUser(host.id);
-  if (isBlocked) {
-    throw new Error("User is blocked");
   }
 
   const isHost = self?.id === host.id;
