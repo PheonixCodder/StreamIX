@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🚀 StreamIX — A Modern Twitch Clone Built with Next.js 14
 
-## Getting Started
+A full-featured, real-time streaming platform built with Next.js 14, featuring RTMP/WHIP streaming, real-time chat, and a complete creator dashboard. This project demonstrates modern full-stack development with real-time features, scalable architecture, and production-ready tooling.
 
-First, run the development server:
+✨ Live Demo
+🔗 Live Demo: streamix-demo.vercel.app (Coming Soon)
+📹 Demo Video: Watch on YouTube
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+📸 Screenshots
+Home Page	Stream View	Creator Dashboard
+https://via.placeholder.com/400x225/6366f1/ffffff?text=Home+Page	https://via.placeholder.com/400x225/8b5cf6/ffffff?text=Live+Stream	https://via.placeholder.com/400x225/10b981/ffffff?text=Dashboard
+🚀 Features
+🎥 Streaming & Broadcasting
+📡 RTMP/WHIP Support - Industry-standard streaming protocols
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🌐 Automated Ingress Generation - Instant streaming endpoints
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🔗 OBS/Streaming Software Integration - Connect your favorite broadcasting tools
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+📸 Custom Thumbnail Upload - Personalize your stream previews
 
-## Learn More
+💬 Interactive Chat System
+⚡ Real-time Socket-based Chat - Instant message delivery
 
-To learn more about Next.js, take a look at the following resources:
+🎨 Unique Viewer Colors - Distinct colors for each participant
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🚦 Advanced Chat Modes - Slow mode, followers-only, and toggle on/off
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+👥 Moderation Tools - Block users, kick participants in real-time
 
-## Deploy on Vercel
+👤 User Features
+🔐 Secure Authentication - Full user management system
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+👥 Social System - Follow creators and build communities
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🤝 Community Tab - Engage with streamer communities
+
+🎛️ Personal Dashboard - Manage your streaming presence
+
+🎨 Viewer Experience
+🏠 Smart Home Feed - Live streams prioritized, personalized recommendations
+
+🔍 Advanced Search - Dedicated search page with optimized layout
+
+📚 Smart Sidebar - Following list and recommendations
+
+🔽 Flexible Layout - Collapsible sidebars, theater mode, focus modes
+
+⚡ Technical Excellence
+📄 SSR (Server-Side Rendering) - Fast loads and SEO optimization
+
+⚡ Blazing Fast Performance - Built with Next.js 14 App Router
+
+🗃️ MySQL Database - Reliable data storage with Prisma ORM
+
+🔄 Real-time Sync - Webhooks for user and stream status updates
+
+🛠️ Tech Stack
+Frontend
+Next.js 14 (App Router, Server Components, SSR)
+
+React 18 with TypeScript
+
+Tailwind CSS - Styling
+
+shadcn/ui - Component library
+
+Zustand - State management
+
+Backend
+Next.js API Routes - Full-stack capabilities
+
+Socket.io - Real-time chat and events
+
+Prisma - Database ORM
+
+MySQL - Primary database
+
+Redis - Caching and real-time data
+
+Streaming Infrastructure
+RTMP/WHIP Protocols - Streaming ingestion
+
+Node-Media-Server or Mediamtx - Media server
+
+FFmpeg - Video processing
+
+Cloudflare Stream (optional) - Alternative streaming service
+
+Authentication & Security
+NextAuth.js or Clerk - Authentication
+
+Zod - Schema validation
+
+bcrypt - Password hashing
+
+📦 Getting Started
+Prerequisites
+Node.js 18+ and npm/yarn/pnpm
+
+MySQL 8.0+
+
+Redis (for caching)
+
+FFmpeg (for streaming)
+
+Installation
