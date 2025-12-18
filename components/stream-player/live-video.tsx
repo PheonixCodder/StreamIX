@@ -56,8 +56,14 @@ export const LiveVideo = ({
         setIsFullscreen(isCurrentlyFullscreen)
     }
 
-    useEventListener("fullscreenchange", handleFullscreenChange, wrapperRef)
+// Attach at the document/window level
+const documentRef = useRef<Document>(document);
 
+useEventListener(
+  "fullscreenchange",
+  handleFullscreenChange,
+  documentRef
+);
     useTracks([Track.Source.Camera, Track.Source.Microphone])
         .filter((track) => track.participant.identity === participant.identity)
         .forEach((track) => {
