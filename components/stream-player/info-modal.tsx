@@ -14,11 +14,13 @@ import { Input } from "@/components/ui/input";
 import { useState, useTransition, useRef } from "react";
 import { updateStream } from "@/actions/stream";
 import { toast } from "sonner";
-import { UploadDropzone } from "@/lib/uploadthing";
 import { useRouter } from "next/navigation";
 import { Hint } from "../hint";
 import { Trash } from "lucide-react";
 import Image from "next/image";
+import { FileUploaderRegular } from "@uploadcare/react-uploader/next";
+import { uploadcarePublicKey } from "@/lib/uploadcare";
+import "@uploadcare/react-uploader/core.css";
 
 interface InfoModalProps{
     initialName: string;
@@ -116,24 +118,9 @@ const InfoModal = ({
                                 />
                             </div>
                         ) : (
-                             <div className="rounded-xl border outline-dashed outline-muted">
-                                <UploadDropzone 
-                                    endpoint="thumbnailUploader"
-                                    className="cursor-pointer"
-                                    appearance={{
-                                        label: {
-                                            color: "#FFFFFF"
-                                        },
-                                        allowedContent:{
-                                            color: "#FFFFFF"
-                                        }
-                                    }}
-                                    onClientUploadComplete={(res) => {
-                                        setThumbnailUrl(res?.[0]?.ufsUrl);
-                                        router.refresh()
-                                    }}
-                                />
-                            </div>
+                             <div className="rounded-xl border outline-dashed outline-muted p-6">
+                                <FileUploaderRegular pubkey={uploadcarePublicKey} />
+                             </div>
                         )}
                     </div>
                     <div className="flex justify-between">

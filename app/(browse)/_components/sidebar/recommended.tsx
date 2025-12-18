@@ -3,7 +3,7 @@
 import { User } from "@prisma/client";
 import { useSidebar } from "@/store/use-sidebar";
 import { useSidebarAnimation } from "@/hooks/useSidebarAnimation";
-import { UserItem, UserItemSkeleton } from "./user-Item";
+import { UserItem, UserItemSkeleton } from "./user-item";
 import { motion, AnimatePresence } from "framer-motion";
 import { Hint } from "@/components/hint";
 
